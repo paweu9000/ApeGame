@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}
+Training
+{% endblock %}
+
+{% block content %}
+<center>
+    {% if all_gorillas %}
+        <select>
+            <option value="monke">{{ all_gorillas.name }}</option>
+        </select>
+        <h6>Siła goryla: {{all_gorillas.strength}}</h6>
+    {% endif %}
+    <br>
+    <form action='actionUrl' method='get'>
+        <button type='submit'> Train </button>
+    </form>
+</center>
+<br>
+<h6>Banan : {{items.item1}}</h6>
+<h6>Smoczy owoc : {{items.item2}}</h6>
+<h6>Szpinak : {{items.item3}}</h6>
+<h6>Jabłko : {{items.item4}}</h6>
+<h6>Sałata : {{items.item5}}</h6>
+<h5>Koszt treningu:</h5>
+<h6>Banan: 2 Szpinak: 5</h6>
+<br>
+<br>
+<a href="/">
+    Return
+</a>
+{% endblock %}

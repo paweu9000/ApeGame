@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}
+Homepage
+{% endblock %}
+
+{% block content %}
+<style>
+    .owned_gorillas{
+        max-height: 50px;
+        display: inline-block;
+    }
+    .div_owned_gorillas{
+        width:25%;
+    }
+    .gorilla_name{
+        display: inline-block;
+        text-decoration: underline;
+        transition: 0.2s;
+    }
+    .gorilla_level{
+        visibility: hidden;
+        width:30px;
+        position: relative;
+    }
+    .gorilla_name:hover + .gorilla_level{
+        display: inline-block;
+        color:black;
+        visibility: visible;
+        
+    }
+    .mid-div{
+        display: inline-block;
+        position:absolute;
+        width: 50%;
+    }
+</style>
+    <center>
+        <h1>Ape Game</h1>
+    </center>
+    {% if user.is_authenticated %}
+        {% if gorillas == None %}
+            <center>
+                <a href="get_gorilla" class="btn btn-info" role="button">Get Gorilla!</a>
+            </center>
+        {% else %}
+        <div style="text-align:center;">
+            <div class="div_owned_gorillas">
+                <br>
+                <h4>
+                    Your gorillas:
+                </h4>
+                <img class="owned_gorillas" src="https://icons.iconarchive.com/icons/google/noto-emoji-animals-nature/1024/22213-gorilla-icon.png">
+                <h6 class="gorilla_name">{{ gorillas.name }}</h6>
+                <h6 class="gorilla_level">lvl {{ gorillas.level }}</h6>
+            </div>
+            <div class="mid-div">
+                <a href="equipment" class="btn btn-info" role="button">Ekwipunek</a>
+                <a href="training" class="btn btn-info" role="button">Trening</a>
+                <a href="pve_combat" class="btn btn-info" role="button">Fight monsters</a>
+                <a href="pvp_gorillas" class="btn btn-info" role="button">Walcz z gorylami</a>
+            </div>
+        </div>
+        {% endif %}
+    {% endif %}
+        
+{% endblock %}

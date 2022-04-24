@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}
+Register
+{% endblock %}
+{% block content %}
+{% load crispy_forms_tags %}
+<style>
+    ::marker{
+        color: black;
+    }
+
+    li{
+        color:black
+    }
+    .text-muted {
+    --bs-text-opacity: 1;
+    color: #000000!important;
+    }
+    label{
+        color: black;
+    }
+
+</style>
+<div class="container submit">
+    <form method="post" style="padding-top: 15px;">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" value="Rejestruj się">
+    </form>
+    <p class="text-center">Already have an account? <a href="/login">Login</a>.</p>
+</div>    
+{% endblock content %}
