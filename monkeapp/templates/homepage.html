@@ -4,6 +4,16 @@ Homepage
 {% endblock %}
 
 {% block content %}
+<script language="javascript" type="text/javascript">
+    //--
+    function popitup(url) {
+        newwindow=window.open(url,'monke','height=600,width=400');
+        if (window.focus) {newwindow.focus()}
+        return false;
+    }
+    
+    // -->
+</script>
 <style>
     .owned_gorillas{
         max-height: 50px;
@@ -14,7 +24,8 @@ Homepage
     }
     .gorilla_name{
         display: inline-block;
-        text-decoration: underline;
+        text-decoration: None;
+        color: black;
         transition: 0.2s;
     }
     .gorilla_level{
@@ -50,7 +61,7 @@ Homepage
                     Your gorillas:
                 </h4>
                 <img class="owned_gorillas" src="https://icons.iconarchive.com/icons/google/noto-emoji-animals-nature/1024/22213-gorilla-icon.png">
-                <h6 class="gorilla_name">{{ gorillas.name }}</h6>
+                <a class="gorilla_name" href="#" onclick="popitup('pop_upmonkey/{{ gorillas.id }}')">{{ gorillas.name }}</a>
                 <h6 class="gorilla_level">lvl {{ gorillas.level }}</h6>
             </div>
             <div class="mid-div">

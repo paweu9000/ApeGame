@@ -1,0 +1,25 @@
+<html>
+    <title>{{ gorilla_to_view.name }}</title>
+    <style>
+        .img{
+            max-height: 150px;
+        }
+    </style>
+    <body style="background-color:mediumpurple">
+        <center>
+            <img class="img" src="https://media.istockphoto.com/photos/gorilla-baby-picture-id463828077?k=20&m=463828077&s=612x612&w=0&h=oBNaLSIc1rrk87vQzqf4K7iD6whewiApgAGKHF24oOE=">
+            <h3>
+                {{ gorilla_to_view.name }}
+            </h3>
+            <h4>
+                level: {{ gorilla_to_view.level }}
+            </h4>
+            <h4>
+                Właściciel:
+            </h4>
+            <h4>
+                {{ gorilla_to_view.owner }}
+            </h4>
+        </center>
+    </body>
+</html>

@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import timedelta, datetime
+from django.utils import timezone
 
 # Create your models here.
 class Gorilla(models.Model):
@@ -23,13 +25,10 @@ class Opponent(models.Model):
     strength = models.IntegerField(default=3)
     health_points = models.IntegerField(default=50)
 
-class TrainingTimeEvent(models.Model):
-    name = models.CharField(max_length=200)
-    when = models.DateField()
-
-    def __str__(self):
-        return self.name
-
+class TrainingTimer(models.Model):
+    trained_gorilla = models.ForeignKey(Gorilla, on_delete=models.CASCADE)
+    started_training = models.DateTimeField(auto_now=True)
+    finished_training = models.DateTimeField(default=timezone.now() + timedelta(minutes=130))
 
 
 

@@ -3,11 +3,15 @@ from .forms import RegisterForm, GorillaForm
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
-from .models import Gorilla, Equipment, Opponent
+from .models import Gorilla, Equipment, Opponent, TrainingTimer
 from random import choice
+from datetime import datetime, timedelta
+from django.utils import timezone
+
 
 
 # Create your views here.
+
 
 def homepage(request):
 	if not request.user.is_authenticated:
@@ -87,25 +91,49 @@ def equipment(request):
 def train_gorilla(request):
 	current_user = request.user
 	all_gorillas = Gorilla.objects.all().get(owner=current_user)
+	training_timer = None
 	items = Equipment.objects.all().get(equipment_owner=request.user)
-	context = {
+	try:
+		training_timer = TrainingTimer.objects.all().get(trained_gorilla=all_gorillas)
+		context = {
 		'all_gorillas': all_gorillas,
-		'items': items
-	}
-	
-	return render(request, 'training.html', context=context)
+		'items': items,
+		'training_timer': training_timer
+		}
+		return render(request, 'training.html', context=context)
+	except:
+		context = {
+			'all_gorillas': all_gorillas,
+			'items': items,
+			'training_timer': training_timer
+		}
+		return render(request, 'training.html', context=context)
 
 def buff_gorilla(request):
 	current_user = request.user
 	gorilla_to_buff = Gorilla.objects.all().get(owner=current_user)
 	equipment_to_delete = Equipment.objects.all().get(equipment_owner=current_user)
+	try:
+		if TrainingTimer.objects.all().get(trained_gorilla=gorilla_to_buff).finished_training - timedelta(minutes=120) < timezone.now():
+			TrainingTimer.objects.filter(trained_gorilla=gorilla_to_buff).delete()
+	except:
+		pass
+	try:
+		training_timer = TrainingTimer.objects.all().get(trained_gorilla=gorilla_to_buff)
+		if training_timer:
+			messages.error(request, f"Your Gorilla is already training!")
+			return redirect(train_gorilla)
+	except:
+		pass
 	if equipment_to_delete.item1 >= 2 and equipment_to_delete.item3 >=5:
+		new_timer = TrainingTimer(trained_gorilla=gorilla_to_buff)
+		new_timer.save()
 		equipment_to_delete.item1 -= 2
 		equipment_to_delete.item3 -= 5
 		equipment_to_delete.save()
 		gorilla_to_buff.strength += 1
 		gorilla_to_buff.save()
-		messages.success(request, f"Your Gorilla just got stronger")
+		messages.success(request, f"Your Gorilla started training")
 		return redirect(train_gorilla)
 	else:
 		messages.error(request, f"You don't have enough resources to train your Gorilla")
@@ -134,6 +162,12 @@ def combat(request, pk):
 	items_to_win = [1, 2, 3, 4, 5]
 	prize: str
 	to_win = choice(items_to_win)
+	try:
+		if TrainingTimer.objects.all().get(trained_gorilla=my_gorilla):
+			messages.error(request, f"Your Gorilla cannot fight while he is training!")
+			return redirect(pve_combat)
+	except:
+		pass
 	
 	while gorilla_hp > 0 and enemy_hp > 0:
 		move_list.append(f"{enemy.name} uderza {my_gorilla.name} za {str(y)} obrażeń")
@@ -176,3 +210,10 @@ def pvp_gorillas(request):
 		'all_gorillas': all_gorillas
 	}
 	return render(request, 'pvp_gorillas.html', context)
+
+def gorilla_windows(request, pk):
+	gorilla_to_view = Gorilla.objects.all().get(id=pk)
+	context = {
+		'gorilla_to_view': gorilla_to_view
+	}
+	return render(request, 'popupmonkey.html', context=context)

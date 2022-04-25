@@ -13,5 +13,6 @@ urlpatterns = [
     path('actionUrl', views.buff_gorilla, name="Buff"),
     path('pve_combat', views.pve_combat, name="PvE"),
     path('pve_combat/<int:pk>', views.combat, name='fight'),
-    path('pvp_gorillas', views.pvp_gorillas, name='pvp')
+    path('pvp_gorillas', views.pvp_gorillas, name='pvp'),
+    path('pop_upmonkey/<int:pk>', views.gorilla_windows, name="gorilla_window")
 ]
