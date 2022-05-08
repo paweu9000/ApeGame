@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}
+Statystyki
+{% endblock %}
+
+{% block content %}
+<center>
+    <img src="{{MEDIA_URL}}{{ gorilla.look.url }}">
+    <h4>Imię: {{gorilla.name}}</h4>
+    <p>Poziom: {{gorilla.level}}</p>
+    <p>Siła: {{gorilla.strength}}</p>
+    <p>Życie: {{gorilla.hp}}</p>
+</center> 
+<a href="/">
+    Return
+</a>
+{% endblock %}

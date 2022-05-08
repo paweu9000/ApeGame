@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}
+Poczta
+{% endblock %}
+
+{% block content %}
+<style>
+    .letterdiv{
+        display: inline-block;
+        border-style: solid;
+        padding-bottom: 200px;
+        width: 75%;
+    }
+    .senddiv{
+        display: inline-block;
+        border-style: solid;
+        width: 20%;
+    }
+</style>
+<center>
+    <br>
+    <div class="senddiv">
+        <h5>
+            <a href="letters/send">
+            Wyślij list
+            </a>
+        </h5>
+    </div>
+    <div class="letterdiv">
+        {% if not letters %}
+            <h5>
+                Twoja skrzynka jest pusta!
+            </h5>
+        {% else %}
+        <div>
+            <h6>Tytuł  |  Nadawca  | Data</h6>
+        </div>
+            {% for letter in letters %}
+            <div style="border-style: solid;">
+                <a style="padding-right: 400px ;" href="letters/{{letter.id}}">
+                    {{letter.title}}
+                </a>
+                <a href="user_profile/{{letter.sender.id}}">
+                    {{letter.sender}}
+                </a>
+                <h7 style="padding-left: 400px">
+                    {{letter.date}}
+                </h7>
+            </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div>
+    </div>
+</center>
+<a href="/" class="link-light">
+    Wróć
+</a>
+
+{% endblock %}

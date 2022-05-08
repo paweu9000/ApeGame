@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    PvE
+{% endblock %}
+{% block content %}
+<style>
+    .gorilla-image{
+        height: 200px
+    }    
+</style>
+<center>
+<div>
+    <div>
+        <div style="display: inline-block; padding-left: 10px;">
+            <img src="{{MEDIA_URL}}{{ my_gorilla.look.url }}">
+            <br>
+            <center>
+            {{my_gorilla.name}}
+            <p>Stats:</p>
+            <p>{{my_gorilla.strength}} Strength</p>
+            <p  id="gorilla_health">{{my_gorilla.hp}} HP</p>
+            </center>
+        </div>
+        <div id="combat_div" style="display: inline-block; padding-left: 100px; padding-top: 20px;">
+                <script>
+                    var moves = JSON.parse('{{ move_list | safe }}');
+                    var combat_div = document.getElementById("combat_div");
+                    var gorilla_hp_list = JSON.parse('{{gorilla_hp_list}}');
+                    var enemy_hp_list = JSON.parse('{{enemy_hp_list}}');
+                    
+
+                    function next_move(){
+                        
+                        var timer = 0;
+
+                        for (let i=0; i<moves.length; i++){
+                            
+                            setTimeout(() => {
+                                var ptag = document.createElement('p');
+                                ptag.className = "line";
+                                ptag.innerHTML = moves[i];
+                                combat_div.appendChild(ptag);
+                            }, timer);
+                            
+                            timer = timer + 500;
+                        }
+                    }
+
+                    function gorillahealth(){
+                        
+                        var timer = 0;
+
+                        for (let i=0; i<gorilla_hp_list.length; i++){
+                            
+                            setTimeout(() => {
+                                document.getElementById("gorilla_health").innerHTML = gorilla_hp_list[i] +' HP';
+                            }, timer);
+                            if (i>0){
+                                timer = timer + 1000;
+                            }
+                            else{
+                                timer = timer + 500;
+                            }
+                        }
+                    }
+                    function enemyhealth(){
+                        
+                        var timer = 0;
+
+                        for (let i=0; i<gorilla_hp_list.length; i++){
+                            
+                            setTimeout(() => {
+                                document.getElementById("enemy_health").innerHTML = enemy_hp_list[i] +' HP';
+                            }, timer);
+                            timer = timer + 500;
+                        }
+                    }
+
+                    next_move();
+                    gorillahealth();
+                    enemyhealth();
+                </script>
+        </div>
+        <div style="display: inline-block; padding-left: 100px; padding-top: 20px;">
+            <img style="width: 300px" src="{{MEDIA_URL}}{{enemy.look.url }}">
+            <br>
+            <center>
+            {{enemy.name}}
+            <p>Stats:</p>
+            <p>{{enemy.strength}} Strength</p>
+            <p id="enemy_health">{{enemy.health_points}} HP</p>
+            </center>
+        </div>
+    </div>
+</div>
+</center>
+<br>
+<br>
+<br>
+<a href="/pve_combat">
+    Wróć
+</a>
+{% endblock %}

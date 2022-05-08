@@ -1,6 +1,9 @@
+from attr import fields
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import Equipment, Auction, Letter, Profile
+
 
 
 class RegisterForm(UserCreationForm):
@@ -28,3 +31,16 @@ class RegisterForm(UserCreationForm):
 
 class GorillaForm(forms.Form):
     name = forms.CharField(max_length=30, required=True)
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['information']
+        widgets = {
+            'information': forms.TextInput(attrs={'class': 'text'}),
+        }
+
+class LetterForm(forms.ModelForm):
+    class Meta:
+        model = Letter
+        fields = ['receiver', 'title', 'content']

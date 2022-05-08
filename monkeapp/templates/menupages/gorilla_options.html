@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}
+Opcje
+{% endblock %}
+
+{% block content %}
+<center>
+{% for gorilla in all_owned_gorillas %}
+<img src="{{MEDIA_URL}}{{ gorilla.look.url }}">
+<br>
+    {{gorilla.name}}
+    <br>
+    <a href="gorilla_options/feed">Nakarm</a> |
+    <a href="gorilla_options/stats">Statystyki</a> 
+    <br>
+    <br>
+{% endfor %}
+<br>
+<br>
+<h3>
+    Ustawienia profilu
+</h3>
+<br>
+<a href="gorilla_options/edit_profile">|Edytuj opis|
+    <a href="gorilla_options/buy_bananas">Kup Złote Banany|</a>
+</a>
+</center> 
+<a href="/" class="link-light">
+    Wróć
+</a>
+{% endblock %}

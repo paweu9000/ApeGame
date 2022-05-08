@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}
+    List od {{letter_to_view.sender}}
+{% endblock %}
+
+{% block content %}
+<style>
+    .letter{
+        border-style: solid;
+    }
+</style>
+<center>
+    <br>
+<div class="letter">
+    <div style="border-style: solid;">
+        {{letter_to_view.title}}
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div>
+        {{letter_to_view.content}}
+    </div>
+    <br>
+    <br>
+    <br>
+<div>
+    {{letter_to_view.date}}
+</div>
+    <div style="border-style: solid;">
+        <a href="/user_profile/{{letter_to_view.sender.id}}">
+            {{letter_to_view.sender}}
+        </a>
+    </div>
+</div>
+</center>
+<a href="/letters" class="link-light">
+    Wróć
+</a>
+
+{% endblock %}

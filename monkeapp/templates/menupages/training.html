@@ -4,7 +4,13 @@ Training
 {% endblock %}
 
 {% block content %}
-
+<style>
+    .training_ptag{
+        border-style: solid;
+        border-color: rgb(19, 80, 43);
+        background-color: rgb(17, 136, 52);
+    }
+</style>
 <script>
     // Set the date we're counting down to
     var countDownDate = new Date("{{ training_timer.finished_training|date:'N j, Y H:i:s' }}").getTime();
@@ -23,7 +29,7 @@ Training
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
       // Display the result in the element with id="demo"
-      document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s ";
+      document.getElementById("demo").innerHTML ="{{all_gorillas.name}}"+" trenuje, wróci z treningu za: "+ minutes + "m " + seconds + "s ";
       // If the count down is finished, write some text
       if (distance < 0) {
         clearInterval(x);
@@ -33,19 +39,35 @@ Training
 </script>
 {% if training_timer != None %}
     <center>
-        <p id="demo"></p>
+        <p class="training_ptag" id="demo"></p>
     </center>
 {% endif %}
 <center>
-    {% if all_gorillas %}
-        <select>
-            <option value="monke">{{ all_gorillas.name }}</option>
-        </select>
-        <h6>Siła goryla: {{all_gorillas.strength}}</h6>
-    {% endif %}
+    {{all_gorillas.name}}
     <br>
-    <form action='actionUrl' method='post'>
+    Siła: {{all_gorillas.strength}}
+    <br>
+    Wytrzymałość: {{all_gorillas.hp}}
+    <br>
+    <br>
+    <form action='actionUrl' method='post' style="display: inline-block;">
+        <h5>
+            Trenuj 
+            <br>
+            Siłę
+        </h5>
         {% csrf_token %}
+        <br>
+        <button type='submit'> Train </button>
+    </form>
+    <form action='actionUrl2' method='post' style="display: inline-block; padding-left: 100px;">
+        <h5>
+            Trenuj 
+            <br>
+            Wytrzymałość
+        </h5>
+        {% csrf_token %}
+        <br>
         <button type='submit'> Train </button>
     </form>
 </center>
@@ -59,7 +81,7 @@ Training
 <h6>Banan: 2 Szpinak: 5</h6>
 <br>
 <br>
-<a href="/">
-    Return
+<a href="/" class="link-light">
+    Wróć
 </a>
 {% endblock %}

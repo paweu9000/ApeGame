@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}
+Karmienie
+{% endblock %}
+
+{% block content %}
+<center>
+    {{gorilla.name}}
+    <br>
+    <form method="POST">
+        {% csrf_token %}
+        <br>
+        <button type='submit'> Nakarm </button>
+    </form>
+    <br>
+    <br>
+    <h9>Pamiętaj, że możesz nakarmić goryla tylko raz na 24h!</h9>
+</center> 
+<a href="/">
+    Return
+</a>
+{% endblock %}

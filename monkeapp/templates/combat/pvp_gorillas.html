@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    PvP
+{% endblock %}
+{% block content %}
+<center>
+    <div>
+        <div>
+            {% for gorilla in all_gorillas %}
+            <p>
+                Name: {{ gorilla.name }}  
+                Level: {{ gorilla.level }}  
+                Strength: {{ gorilla.strength }}  
+                HP:  {{ gorilla.hp }}            
+                <a href="pvp_gorillas/{{gorilla.id}}" class="btn btn-info" role="button">Fight</a>
+            </p>
+            {% endfor %}
+            <br>
+            <a href="/" class="link-light">
+                Wróć
+            </a>
+        </div>
+    </div>
+</center>
+{% endblock %}

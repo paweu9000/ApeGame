@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    PvE
+{% endblock %}
+{% block content %}
+<style>
+    .gorilla-image{
+        height: 200px
+    }
+    
+</style>
+<div>
+    <div>
+        <div style="display: inline-block; padding-left: 10px;">
+            <img src="{{MEDIA_URL}}{{ my_gorillas.look.url }}">
+            <br>
+            <center>
+            {{my_gorillas.name}}
+            <p>Stats:</p>
+            <p>{{my_gorillas.strength}} Strength</p>
+            <p>{{my_gorillas.hp}} HP</p>
+            </center>
+        </div>
+        {% for opponent in new_opponent %}
+        <div style="display: inline-block; padding-left: 100px; padding-top: 20px;">
+            <img style="width: 300px" src="{{MEDIA_URL}}{{ opponent.look.url }}">
+            <br>
+            <center>
+            {{opponent.name}}
+            <p>Stats:</p>
+            <p>{{opponent.strength}} Strength</p>
+            <p>{{opponent.health_points}} HP</p>
+            <a href="pve_combat/{{opponent.id}}" class="btn btn-info" role="button">Fight</a>
+            </center>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+    
+<br>
+<br>
+<br>
+<a href="/" class="link-light">
+    Wróć
+</a>
+{% endblock %}

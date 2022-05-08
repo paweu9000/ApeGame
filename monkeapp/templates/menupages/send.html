@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}
+Wyślij
+{% endblock %}
+
+{% block content %}      
+
+{% load crispy_forms_tags %}
+<style>
+    .text{
+        padding-bottom: 500px;
+        padding-right: 300px;
+    }
+</style>
+<!--Login--> 
+<div class="container py-5">
+    <center>
+        <h1>Wyślij list</h1>
+    <form method="POST">
+        {% csrf_token %}
+        Odbiorca
+        <br>
+            {{form.receiver}}
+            <br>
+            Tytuł
+            <br>
+            {{form.title}}
+            <br>
+            Treść
+            <br>
+            {{form.content}}
+            <br>
+        <br>
+        <br>
+        <button class="btn btn-primary" type="submit">Wyślij</button>
+    </form>
+    </center>
+</div>
+<a href="..">
+    Wróć
+</a>
+
+{% endblock %}

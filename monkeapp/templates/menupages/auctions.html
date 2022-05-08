@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}
+Auction House
+{% endblock %}
+
+{% block content %}
+<center>
+    <h1>Ape Game</h1>
+</center>
+<br>
+
+
+<div class="container py-5">
+    <h1>Moje aukcje</h1>
+    {% if my_auctions is not None %}
+        {% for my_auction in my_auctions %}
+            Przedmiot: {{ my_auction.item }}
+            Ilość: {{ my_auction.amount_of_items }}
+            Koszt: {{ my_auction.cost }}
+            <a class="btn btn-primary" href="auctions/{{my_auction.item}}/{{my_auction.id}}" type="button">Anuluj aukcję</a>
+            <br>
+            <br>
+        {% endfor %}
+    {% endif %}
+</div>
+<div class="container py-5">
+  <h1>Sprzedaj</h1>
+  <form method="POST">
+    {% csrf_token %}
+    <label for="items">Wybierz przedmiot do sprzedania:</label>
+        <select id="items" name="items">
+        <option value="item1" id="items">Banan: {{items.item1}}</option>
+        <option value="item2">Smoczy Owoc: {{items.item2}}</option>
+        <option value="item3">Szpinak: {{items.item3}}</option>
+        <option value="item4">Jabłko: {{items.item4}}</option>
+        <option value="item5">Sałata: {{items.item5}}</option>
+        </select>
+    <label for="item_amount">Ilość: </label>
+        <input type="number" id="item_amount" name="item_amount">
+    <label for="item_price">Cena za 1 przedmiot: </label>
+        <input type="number" id="item_price" name="item_price">
+    <button class="btn btn-primary" type="submit">Wystaw</button>
+  </form>
+</div>
+<div class="container py-5">
+    <h1>Kup</h1>
+    {% if auctions is not None %}
+        {% for auction in auctions %}
+            {% if auction.item == 'item1' %}
+                Przedmiot: Banan
+            {% endif %}
+            Ilość: {{ auction.amount_of_items }}
+            Koszt: {{ auction.cost }}
+            Właściciel aukcji: {{ auction.creator }}
+            {% if auction.creator != current_user %}
+            <a href="auctions/{{auction.amount_of_items}}/{{auction.id}}" class="btn btn-info" role="button">Kup</a>
+            {% endif %}
+            <br>
+            <br>
+        {% endfor %}
+    {% endif %}
+</div>
+</center> 
+<a href="/" class="link-light">
+    Wróć
+</a>
+{% endblock %}

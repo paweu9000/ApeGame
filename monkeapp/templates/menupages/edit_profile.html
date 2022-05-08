@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}
+Edytuj profil
+{% endblock %}
+
+{% block content %}      
+
+{% load crispy_forms_tags %}
+<style>
+    .text{
+        padding-bottom: 500px;
+        padding-right: 300px;
+    }
+</style>
+<!--Login--> 
+<div class="container py-5">
+    <center>
+        <h1>Edytuj profil</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{form.information}}
+        <br>
+        <br>
+        <button class="btn btn-primary" type="submit">Zapisz</button>
+    </form>
+    </center>
+</div>
+<a href="..">
+    Return
+</a>
+
+{% endblock %}

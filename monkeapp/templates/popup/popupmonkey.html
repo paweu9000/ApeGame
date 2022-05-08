@@ -1,0 +1,23 @@
+{% extends 'popupbase.html' %}
+    {% block title %}
+    {{ gorilla_to_view.name }}
+    {% endblock %}
+        {% block content %}
+        <style>
+            .img{
+                max-height: 150px;
+            }
+        </style>
+        <center>
+            <img src="{{MEDIA_URL}}{{ gorilla_to_view.look.url }}">
+            <h3>
+                {{ gorilla_to_view.name }}
+            </h3>
+            <h4>
+                level: {{ gorilla_to_view.level }}
+            </h4>
+            <h4>
+                Właściciel: {{ gorilla_to_view.owner }}
+            </h4>
+        </center>
+        {% endblock content %}
