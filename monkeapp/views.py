@@ -41,3 +41,5 @@ def gorilla_windows_pvp(request, pk):
 	return render(request, 'popup/popuppvp.html', context=context)
 
 
+
+

@@ -1,9 +1,10 @@
 from tkinter import CASCADE
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import timedelta
+from datetime import datetime, timedelta
 from django.utils import timezone
 from django.conf import settings
+import json
 
 # Create your models here.
 class Gorilla(models.Model):
@@ -54,6 +55,16 @@ class Letter(models.Model):
     content = models.CharField(null=False, max_length=3000)
     date = models.DateTimeField(default=timezone.now())
     receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="receiver")
+
+class Room(models.Model):
+    name = models.CharField(max_length=100, default='Shoutbox')
+
+class Message(models.Model):
+    value = models.CharField(max_length=1000)
+    date = models.DateTimeField(default=datetime.now(), blank=True)
+    message_owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.CharField(max_length=100)
+    room = models.CharField(max_length=100, default='Shoutbox')
 
 
 

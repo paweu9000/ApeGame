@@ -1,0 +1,12 @@
+.gorilla-image{
+    height: 200px
+}
+.combat_div{
+    display: inline-block;
+    padding-left: 100px;
+    padding-top: 20px;  
+}
+.gorilla_div{
+    display: inline-block;
+    padding-left: 10px;
+}

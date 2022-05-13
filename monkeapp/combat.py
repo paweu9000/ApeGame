@@ -149,5 +149,4 @@ def pvp_combat(request, pk):
 		'gorilla_hp_list': gorilla_hp_list,
 		'enemy_gorilla_hp_list': enemy_gorilla_hp_list
 	}
-	print(move_list)
 	return render(request, 'combat/pvpcombat.html', context=context)

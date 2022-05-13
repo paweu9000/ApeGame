@@ -1,0 +1,41 @@
+    .owned_gorillas{
+        max-height: 50px;
+        display: inline-block;
+    }
+    .div_owned_gorillas{
+        width:25%;
+    }
+    .gorilla_name{
+        display: inline-block;
+        text-decoration: None;
+        color: black;
+        transition: 0.2s;
+    }
+    .gorilla_level{
+        visibility: hidden;
+        width:30px;
+        position: relative;
+    }
+    .gorilla_name:hover + .gorilla_level{
+        display: inline-block;
+        color:black;
+        visibility: visible;
+        
+    }
+
+    .container {
+    display: flex;
+    justify-content: space-between;
+    align-content: flex-start;
+    }
+
+    .right{
+        float: right;
+        text-align: right;
+    }
+    .popup{
+        width: 500px;
+        border-style: solid;
+        border-width: 2px;
+        border-color:black;
+    }

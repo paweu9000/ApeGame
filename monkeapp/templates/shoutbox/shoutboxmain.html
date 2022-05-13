@@ -1,0 +1,81 @@
+{% extends 'shoutboxbase.html' %}
+{% block title %}
+Shoutbox
+{% endblock %}
+
+{% block content %}
+<script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+<style>
+    .display_messages{
+        background-color: rgb(97, 91, 91);
+        width: 100%;
+        height: 100%;
+    }
+    .container_darker{
+        background-color: rgb(104, 109, 114);
+        border-style: solid;
+        border-radius: 12px;
+        padding-bottom: 2px;
+    }
+</style>
+<center>
+    {{room.name}}
+    <br>
+    <form id="message-form">
+        {% csrf_token %}
+        <input type="hidden" name="username" id="username" value="{{username}}">
+        <input type="text" name="message" id="message" width="600px" />
+        <input type="submit" value="Send">
+    </form>
+
+    <div class="display_messages" id="display_messages">
+        <!--
+            Na wiadomości
+        -->
+        
+    </div>
+</center>
+<script>
+    $(document).ready(function(){
+    
+    setInterval(function(){
+        $.ajax({
+            type: 'GET',
+            url : "shoutbox/get_messages",
+            success: function(response){
+                console.log(response);
+                $("#display_messages").empty();
+                for (var key in response.messages)
+                {
+                    var temp="<div class='container_darker'><b>"+response.messages[key].user+"</b><p>"+response.messages[key].value+"</p><span class='time-left'>"+response.messages[key].date+"</span></div>";
+                    $("#display_messages").append(temp);
+                }
+            },
+            error: function(response){
+                alert('An error occured')
+            }
+        });
+    },1000);
+    })
+</script>
+
+<script type="text/javascript">
+    $(document).on('submit','#message-form',function(e){
+      e.preventDefault();
+  
+      $.ajax({
+        type:'POST',
+        url:'/shoutbox/message',
+        data:{
+            username:$('#username').val(),
+            message:$('#message').val(),
+          csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+        },
+        success: function(data){
+           //alert(data)
+        }
+      });
+      document.getElementById('message').value = ''
+    });
+</script>
+{% endblock %}

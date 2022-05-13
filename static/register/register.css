@@ -1,0 +1,14 @@
+::marker{
+    color: black;
+}
+
+li{
+    color:black
+}
+.text-muted {
+--bs-text-opacity: 1;
+color: #000000!important;
+}
+label{
+    color: black;
+}

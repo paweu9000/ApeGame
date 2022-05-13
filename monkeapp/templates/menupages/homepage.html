@@ -4,56 +4,9 @@ Homepage
 {% endblock %}
 
 {% block content %}
-<script language="javascript" type="text/javascript">
-    //--
-    function popitup(url) {
-        newwindow=window.open(url,'monke','height=700,width=500');
-        if (window.focus) {newwindow.focus()}
-        return false;
-    }
-    
-    // -->
-</script>
-<style>
-    .owned_gorillas{
-        max-height: 50px;
-        display: inline-block;
-    }
-    .div_owned_gorillas{
-        width:25%;
-    }
-    .gorilla_name{
-        display: inline-block;
-        text-decoration: None;
-        color: black;
-        transition: 0.2s;
-    }
-    .gorilla_level{
-        visibility: hidden;
-        width:30px;
-        position: relative;
-    }
-    .gorilla_name:hover + .gorilla_level{
-        display: inline-block;
-        color:black;
-        visibility: visible;
-        
-    }
-
-    .container {
-    display: flex;
-    justify-content: space-between;
-    align-content: flex-start;
-    }
-
-    .right{
-        float: right;
-        text-align: right;
-    }
-    .left{
-        flex
-    }
-</style>
+{% load static %}
+<script src="{% static 'homepage/homepage.js' %}"></script>
+<link rel="stylesheet" href="{% static 'homepage/homepage.css' %}">
     <center>
         <h1>Ape Game</h1>
     </center>
@@ -112,6 +65,14 @@ Homepage
                             <a href="auctions" class="link-light">Aukcje</a>
                         </th>
                       </tr>
+                      <tr>
+                        <th scope="row">
+                            <a href="#" onclick="shoutbox('shoutbox')">
+                                {% load static %}
+                                <img src="{% static 'shoutbox.png' %}" alt="shoutbox">
+                            </a>
+                        </th>
+                      </tr>
                     </tbody>
                   </table>
             </div>
@@ -127,7 +88,7 @@ Homepage
                     <br>
                     <div>
                     {% for fighter in all_gorillas %}
-                        <p style="width:500px; border-style: solid; border-width: 2px; border-color:black;">Imię goryla: 
+                        <p class="popup">Imię goryla: 
                             <a class="gorilla_name" href="#" onclick="popitup('pop_upmonkey/{{ fighter.id }}')">{{ fighter.name }} </a>
                             Właściciel: <a class="gorilla_name" href="user_profile/{{fighter.owner.id}}">{{fighter.owner}}</a> Punkty pvp: {{fighter.pvp_points}}</p>
                     {% endfor %}
@@ -151,7 +112,9 @@ Homepage
                       </svg>
                     {{money.gold}}
                    <br>
-                    <img style="max-width: 32px;" src="https://cdn-icons-png.flaticon.com/512/590/590682.png">
+                    <a href="/gorilla_options/buy_bananas">
+                        <img style="max-width: 32px;" src="https://cdn-icons-png.flaticon.com/512/590/590682.png">
+                    </a>
                     {{money.golden_banana}}
                 </p>
             </div>

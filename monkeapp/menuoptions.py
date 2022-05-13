@@ -310,6 +310,14 @@ def buy_bananas(request):
 	}
 	return render(request, 'menupages/buy_bananas.html', context=context)
 
+def paymentComplete(request):
+	body = json.loads(request.body)
+	print('BODY:', body)
+	product = Equipment.objects.get(id=body['product'])
+	product.golden_banana += 5
+	product.save()
+	return JsonResponse('Zakup udany!', safe=False)
+
 def letters(request):
 	try:
 		letters = Letter.objects.all().filter(receiver=request.user)
@@ -345,3 +353,28 @@ def letter_content(request, pk):
 	}
 
 	return render(request, 'menupages/view_letter.html', context=context)
+
+def name_change(request):
+	gorilla = Gorilla.objects.get(owner=request.user)
+	premium_currency = Equipment.objects.get(equipment_owner=request.user)
+	if request.method == 'POST':
+		if premium_currency.golden_banana >= 3:
+			name = request.POST.get('name')
+			gorilla.name = name
+			gorilla.save()
+			premium_currency.golden_banana -= 3
+			premium_currency.save()
+			messages.success(request, "Pomyślnie zmieniono nazwę!")
+			return redirect(name_change)
+		elif premium_currency.golden_banana < 3:
+			messages.error(request, "Nie masz wystarczającej ilości złotych bananów!")
+			return redirect(name_change)
+		else:
+			messages.error(request, "Wystąpił błąd, spróbuj ponownie")
+			return redirect(name_change)
+	context = {
+		'gorilla': gorilla,
+		'premium_currency': premium_currency
+	}
+
+	return render(request, 'menupages/namechange.html', context=context)

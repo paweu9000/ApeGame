@@ -4,23 +4,8 @@ Register
 {% endblock %}
 {% block content %}
 {% load crispy_forms_tags %}
-<style>
-    ::marker{
-        color: black;
-    }
-
-    li{
-        color:black
-    }
-    .text-muted {
-    --bs-text-opacity: 1;
-    color: #000000!important;
-    }
-    label{
-        color: black;
-    }
-
-</style>
+{% load static %}
+<link rel="stylesheet" href="{% static 'register/register.css' %}">
 <div class="container submit">
     <form method="post" style="padding-top: 15px;">
         {% csrf_token %}

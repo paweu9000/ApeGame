@@ -7,6 +7,12 @@ Premium
 {% block content %}
 <center>
 <h3>Kup Złote Banany</h3>
+<br>
+<img style="max-width: 32px;" src="https://cdn-icons-png.flaticon.com/512/590/590682.png">
+<br>
+<br>
+<br>
+5zł = 5 Złotych Bananów
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,7 +26,40 @@ Premium
     <script src="https://www.paypal.com/sdk/js?client-id=AQ2IIS1kc4IeW0ade3slze8zUjU6NhfNRPOkJdzLi5crPoYpKpXxoZCqrekfrayafvjalLsulAuEheUB&currency=PLN&disable-funding=credit"></script>
 
     <script>
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie('csrftoken');
+
         // Render the PayPal button into #paypal-button-container
+        var product = '{{ currency.id }}';
+
+        function completeOrder(){
+            var url = '{% url "complete" %}'
+            
+            fetch(url, {
+                method:'POST',
+                headers:{
+                    'Content-type':'application/json',
+                    'X-CSRFToken':csrftoken,
+                },
+                body: JSON.stringify({'product': product})
+            })
+        }
+
         paypal.Buttons({
 
             // Set up the transaction
@@ -34,13 +73,16 @@ Premium
                 });
             },
 
+            
+
             // Finalize the transaction
             onApprove: function(data, actions) {
                 return actions.order.capture().then(function(orderData) {
                     // Successful capture! For demo purposes:
                     console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
                     var transaction = orderData.purchase_units[0].payments.captures[0];
-                    alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nZakupiłeś 5 Złotych Bananów!');
+                    completeOrder()
+                    alert('Transakcja '+ transaction.status + ': ' + transaction.id + '\n\nZakupiłeś 5 Złotych Bananów!');
 
                     // Replace the above to show a success message within this page, e.g.
                     // const element = document.getElementById('paypal-button-container');

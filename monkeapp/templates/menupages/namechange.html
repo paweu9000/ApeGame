@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}
+Opcje
+{% endblock %}
+
+{% block content %}
+<center>
+<img src="{{MEDIA_URL}}{{ gorilla.look.url }}">
+<br>
+    {{gorilla.name}}
+<br>
+<br>
+<br>
+<div class="container py-5">
+    <form method="POST">
+        {% csrf_token %}
+        <label for="name">Wybierz nowę imię:</label>
+            <input type="text" id="name" name="name">
+        <button class="btn btn-primary" type="submit">Zatwierdź</button>
+    </form>
+    Koszt zmiany imienia wynosi 3 złote banany, obecnie posiadasz: <img style="max-width: 32px;" src="https://cdn-icons-png.flaticon.com/512/590/590682.png"> 
+    {{premium_currency.golden_banana}}
+</center> 
+<a href="/gorilla_options" class="link-light">
+    Wróć
+</a>
+{% endblock %}
